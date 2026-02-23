@@ -8,6 +8,8 @@ const db = require('./database');
 const app = express();
 const port = process.env.PORT || 3000;
 
+const FRONTEND_URL = process.env.FRONTEND_URL || 'https://pmarodinn.github.io/AquiComigo';
+
 // Configuração do Mercado Pago
 const client = new MercadoPagoConfig({ 
   accessToken: process.env.MP_ACCESS_TOKEN 
@@ -94,9 +96,9 @@ app.post('/api/create_preference', async (req, res) => {
           }
         },
         back_urls: {
-          success: `${process.env.FRONTEND_URL}/index.html?status=success`,
-          failure: `${process.env.FRONTEND_URL}/index.html?status=failure`,
-          pending: `${process.env.FRONTEND_URL}/index.html?status=pending`
+          success: `${FRONTEND_URL}/index.html?status=success`,
+          failure: `${FRONTEND_URL}/index.html?status=failure`,
+          pending: `${FRONTEND_URL}/index.html?status=pending`
         },
         auto_return: 'approved',
         external_reference: orderId,
