@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" fill="none">
+  <!-- Sombra -->
+  <ellipse cx="150" cy="270" rx="70" ry="12" fill="rgba(30,58,95,0.12)"/>
+
+  <!-- Corpo principal da tag (vista frontal arredondada) -->
+  <rect x="75" y="40" width="150" height="200" rx="28" fill="#1e3a5f"/>
+
+  <!-- Brilho lateral esquerdo -->
+  <rect x="75" y="40" width="32" height="200" rx="28" fill="rgba(255,255,255,0.06)"/>
+
+  <!-- Borda/bezel sutil -->
+  <rect x="75" y="40" width="150" height="200" rx="28" stroke="rgba(26,86,219,0.5)" stroke-width="2" fill="none"/>
+
+  <!-- Tela / painel frontal -->
+  <rect x="90" y="60" width="120" height="160" rx="18" fill="#0f172a"/>
+
+  <!-- Logo/ícone AquiComigo no centro -->
+  <circle cx="150" cy="130" r="30" fill="rgba(249,115,22,0.15)" stroke="#f97316" stroke-width="1.5"/>
+  <circle cx="150" cy="130" r="18" fill="#f97316"/>
+  <circle cx="150" cy="124" r="6" fill="#ffffff"/>
+  <path d="M150 130 L142 148 L150 144 L158 148 Z" fill="#ffffff"/>
+
+  <!-- Indicador de status LED (verde = ativo) -->
+  <circle cx="150" cy="185" r="5" fill="#22c55e"/>
+  <!-- Anel de pulso -->
+  <circle cx="150" cy="185" r="9" stroke="#22c55e" stroke-width="1" fill="none" opacity="0.4"/>
+
+  <!-- Texto "AquiComigo" pequeno na tag -->
+  <text x="150" y="210" text-anchor="middle" font-family="Inter, sans-serif" font-size="8" font-weight="800" fill="rgba(255,255,255,0.5)" letter-spacing="1">AQUICOMIGO</text>
+
+  <!-- Parafuso / detalhe técnico superior -->
+  <circle cx="110" cy="75" r="5" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+  <circle cx="190" cy="75" r="5" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+
+  <!-- Parafuso / detalhe técnico inferior -->
+  <circle cx="110" cy="225" r="5" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+  <circle cx="190" cy="225" r="5" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+
+  <!-- Clip de fixação no topo -->
+  <rect x="130" y="22" width="40" height="24" rx="8" fill="#334155"/>
+  <rect x="137" y="26" width="26" height="16" rx="5" fill="#1e293b"/>
+  <rect x="143" y="30" width="14" height="8" rx="3" fill="#0f172a"/>
+
+  <!-- Antena (sinal) linhas no topo direito -->
+  <path d="M210 70 Q222 60 220 48" stroke="#1a56db" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.6"/>
+  <path d="M214 74 Q230 60 228 44" stroke="#1a56db" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.35"/>
+  <path d="M218 78 Q238 62 236 40" stroke="#1a56db" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.2"/>
+</svg>
