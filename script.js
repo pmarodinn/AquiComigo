@@ -64,19 +64,52 @@
     });
   });
 
-  /* ─── BOTÕES CTA: FEEDBACK VISUAL ───────────────────────── */
-  document.querySelectorAll('.kit-card__cta').forEach((btn) => {
-    btn.addEventListener('click', function (e) {
+  /* ─── CHECKOUT INTEGRAÇÃO (MERCADO PAGO) ──────────────── */
+  const API_URL = 'http://localhost:3000/api'; // Ajuste conforme seu backend
+
+  document.querySelectorAll('[data-product-id]').forEach((btn) => {
+    btn.addEventListener('click', async function (e) {
       e.preventDefault();
-      const original = this.textContent;
-      this.textContent = '✔ Adicionado!';
-      this.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
-      this.style.boxShadow = '0 4px 18px rgba(34, 197, 94, 0.4)';
-      setTimeout(() => {
-        this.textContent = original;
-        this.style.background = '';
-        this.style.boxShadow = '';
-      }, 2000);
+      
+      const originalText = this.textContent;
+      const productId = this.getAttribute('data-product-id');
+
+      // Feedback visual de carregamento
+      this.textContent = 'Gerando Checkout...';
+      this.style.opacity = '0.7';
+      this.style.pointerEvents = 'none';
+
+      try {
+        const response = await fetch(`${API_URL}/create_preference`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ productId })
+        });
+
+        if (!response.ok) {
+          throw new Error('Erro na resposta do servidor');
+        }
+
+        const data = await response.json();
+
+        if (data.init_point) {
+          // Redireciona para o Mercado Pago
+          window.location.href = data.init_point;
+        } else {
+          throw new Error('Link de pagamento não recebido');
+        }
+
+      } catch (error) {
+        console.error('Erro no checkout:', error);
+        alert('Houve um erro ao processar seu pedido. Tente novamente.');
+        
+        // Restaura botão em caso de erro
+        this.textContent = originalText;
+        this.style.opacity = '1';
+        this.style.pointerEvents = 'auto';
+      }
     });
   });
 
