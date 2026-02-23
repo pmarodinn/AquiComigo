@@ -65,7 +65,11 @@
   });
 
   /* ─── CHECKOUT INTEGRAÇÃO (MERCADO PAGO) ──────────────── */
-  const API_URL = 'http://localhost:3000/api'; // Ajuste conforme seu backend
+  const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  const API_URL = isLocalhost 
+    ? 'http://localhost:3000/api' 
+    : 'https://aquicomigo-backend.onrender.com/api'; // Substituir pela URL real após deploy
+  
   const modal = document.querySelector('.modal-overlay');
   const modalClose = document.querySelector('.modal-close');
   const checkoutForm = document.getElementById('checkout-form');

@@ -10,6 +10,9 @@
   "keywords": ["express", "mercadopago", "sqlite"],
   "author": "AquiComigo",
   "license": "ISC",
+  "engines": {
+    "node": ">=18"
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",

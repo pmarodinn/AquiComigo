@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: aquicomigo-backend
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node backend/server.js
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: MP_ACCESS_TOKEN
+        sync: false
+      - key: FRONTEND_URL
+        value: https://pmarodinn.github.io/AquiComigo

@@ -14,7 +14,22 @@ const client = new MercadoPagoConfig({
 });
 
 app.use(express.json());
-app.use(cors());
+// Configuração do CORS
+const allowedOrigins = [
+  'http://localhost:5500',
+  'http://127.0.0.1:5500',
+  'https://pmarodinn.github.io'
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+}));
 
 // Rota de Teste
 app.get('/', (req, res) => {
