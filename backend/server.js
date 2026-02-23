@@ -34,7 +34,7 @@ app.get('/api/products', (req, res) => {
 
 // Criar Preferência de Pagamento
 app.post('/api/create_preference', async (req, res) => {
-  const { productId } = req.body;
+  const { productId, payer } = req.body;
 
   if (!productId) {
     return res.status(400).json({ error: 'Produto não especificado' });
@@ -53,6 +53,10 @@ app.post('/api/create_preference', async (req, res) => {
       const orderId = uuidv4();
       const preference = new Preference(client);
 
+      // Divide o nome completo em nome e sobrenome
+      const [name, ...surnameParts] = payer && payer.name ? payer.name.split(' ') : ['Cliente', 'Anônimo'];
+      const surname = surnameParts.join(' ') || '';
+
       const body = {
         items: [
           {
@@ -65,6 +69,15 @@ app.post('/api/create_preference', async (req, res) => {
             picture_url: 'https://aquicomigo.com/images/logo/icon.png' // Substituir por URL real em produção
           }
         ],
+        payer: {
+          name: name,
+          surname: surname,
+          email: payer?.email || 'email@naoinformado.com',
+          phone: {
+            area_code: payer?.phone ? payer.phone.substring(0, 2) : '',
+            number: payer?.phone ? payer.phone.substring(2) : ''
+          }
+        },
         back_urls: {
           success: `${process.env.FRONTEND_URL}/index.html?status=success`,
           failure: `${process.env.FRONTEND_URL}/index.html?status=failure`,
@@ -77,9 +90,9 @@ app.post('/api/create_preference', async (req, res) => {
 
       const response = await preference.create({ body });
 
-      // Salvar pedido no banco
-      const stmt = db.prepare('INSERT INTO orders (id, preference_id, product_id, status) VALUES (?, ?, ?, ?)');
-      stmt.run(orderId, response.id, product.id, 'pending', (dbErr) => {
+      // Salvar pedido no banco com dados do comprador
+      const stmt = db.prepare('INSERT INTO orders (id, preference_id, product_id, status, payer_email, payer_name, payer_phone) VALUES (?, ?, ?, ?, ?, ?, ?)');
+      stmt.run(orderId, response.id, product.id, 'pending', payer?.email, payer?.name, payer?.phone, (dbErr) => {
         if (dbErr) {
           console.error('Erro ao salvar pedido:', dbErr);
           // Não falhar a requisição se o pedido não for salvo, mas logar o erro

@@ -236,7 +236,7 @@
               <div class="depoimento-card__avatar">DS</div>
               <div>
                 <strong>Dra. Daniela Souza</strong>
-                <span>Pediatra · CRM 123456 · Belo Horizonte – MG</span>
+                <span>Pediatra · Belo Horizonte – MG</span>
               </div>
             </div>
           </div>
@@ -293,7 +293,7 @@
                 <div class="kit-card__installments">ou 6x de <strong>R$ 32,98</strong> sem juros</div>
               </div>
               <a href="#" class="btn btn--orange btn--full kit-card__cta" data-product-id="kit-essencial">Garantir Meu Kit Essencial</a>
-              <div class="kit-card__frete">🚚 Frete Grátis para todo o Brasil</div>
+              <div class="kit-card__frete"></div>
             </div>
           </div>
 
@@ -319,7 +319,7 @@
                 <div class="kit-card__installments">ou 6x de <strong>R$ 57,98</strong> sem juros</div>
               </div>
               <a href="#" class="btn btn--orange btn--full kit-card__cta" data-product-id="kit-familia">Garantir Segurança dos Meus Filhos</a>
-              <div class="kit-card__frete">🚚 Frete Grátis para todo o Brasil</div>
+              <div class="kit-card__frete"></div>
             </div>
           </div>
 
@@ -355,7 +355,46 @@
       </div>
     </section>
 
-  </main>
+    <!-- ============================
+       H. MODAL DE CHECKOUT (DADOS DO COMPRADOR)
+  ============================= -->
+  <div class="modal-overlay" id="checkout-modal">
+    <div class="modal-content">
+      <button class="modal-close" id="modal-close" aria-label="Fechar Modal">&times;</button>
+      <div class="modal-header">
+        <h3 class="modal-title">Quase lá! 🚀</h3>
+        <p class="modal-desc">Informe seus dados para identificarmos seu pedido.</p>
+      </div>
+      
+      <form id="checkout-form" class="checkout-form">
+        <input type="hidden" id="selected-product-id" name="productId" value="">
+        
+        <div class="form-group">
+          <label for="payer-name">Nome Completo</label>
+          <input type="text" id="payer-name" name="name" placeholder="Ex: Maria Silva" required>
+        </div>
+
+        <div class="form-group">
+          <label for="payer-email">E-mail</label>
+          <input type="email" id="payer-email" name="email" placeholder="Ex: maria@email.com" required>
+          <span class="form-hint">Enviaremos o código de rastreio para este e-mail.</span>
+        </div>
+
+        <div class="form-group">
+          <label for="payer-phone">Celular (WhatsApp)</label>
+          <input type="tel" id="payer-phone" name="phone" placeholder="(11) 99999-9999" required>
+        </div>
+
+        <button type="submit" class="btn btn--orange btn--full modal-submit">
+          Ir para Pagamento Seguro
+        </button>
+        
+        <div class="modal-security">
+          🔒 Seus dados estão protegidos.
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- ============================
        G. RODAPÉ (FOOTER)

@@ -29,7 +29,11 @@ function initDb() {
       preference_id TEXT,
       product_id TEXT,
       status TEXT DEFAULT 'pending',
+      payer_name TEXT,
+      payer_email TEXT,
+      payer_phone TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      updated_at DATETIME,
       FOREIGN KEY(product_id) REFERENCES products(id)
     )`);
 

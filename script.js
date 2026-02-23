@@ -66,51 +66,83 @@
 
   /* ─── CHECKOUT INTEGRAÇÃO (MERCADO PAGO) ──────────────── */
   const API_URL = 'http://localhost:3000/api'; // Ajuste conforme seu backend
+  const modal = document.querySelector('.modal-overlay');
+  const modalClose = document.querySelector('.modal-close');
+  const checkoutForm = document.getElementById('checkout-form');
+  const productIdInput = document.getElementById('selected-product-id');
 
+  // Abrir modal ao clicar em comprar
   document.querySelectorAll('[data-product-id]').forEach((btn) => {
-    btn.addEventListener('click', async function (e) {
+    btn.addEventListener('click', function (e) {
       e.preventDefault();
-      
-      const originalText = this.textContent;
       const productId = this.getAttribute('data-product-id');
-
-      // Feedback visual de carregamento
-      this.textContent = 'Gerando Checkout...';
-      this.style.opacity = '0.7';
-      this.style.pointerEvents = 'none';
-
-      try {
-        const response = await fetch(`${API_URL}/create_preference`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ productId })
-        });
-
-        if (!response.ok) {
-          throw new Error('Erro na resposta do servidor');
-        }
-
-        const data = await response.json();
-
-        if (data.init_point) {
-          // Redireciona para o Mercado Pago
-          window.location.href = data.init_point;
-        } else {
-          throw new Error('Link de pagamento não recebido');
-        }
-
-      } catch (error) {
-        console.error('Erro no checkout:', error);
-        alert('Houve um erro ao processar seu pedido. Tente novamente.');
-        
-        // Restaura botão em caso de erro
-        this.textContent = originalText;
-        this.style.opacity = '1';
-        this.style.pointerEvents = 'auto';
-      }
+      productIdInput.value = productId;
+      modal.classList.add('active');
     });
+  });
+
+  // Fechar modal
+  modalClose.addEventListener('click', () => {
+    modal.classList.remove('active');
+  });
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.classList.remove('active');
+    }
+  });
+
+  // Submeter formulário e ir para MP
+  checkoutForm.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    
+    // Feedback visual
+    submitBtn.textContent = 'Gerando Pagamento Seguro...';
+    submitBtn.style.opacity = '0.8';
+    submitBtn.disabled = true;
+
+    const formData = new FormData(this);
+    const payload = {
+      productId: formData.get('productId'),
+      payer: {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        phone: formData.get('phone')
+      }
+    };
+
+    try {
+      const response = await fetch(`${API_URL}/create_preference`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        throw new Error('Erro na resposta do servidor');
+      }
+
+      const data = await response.json();
+
+      if (data.init_point) {
+        window.location.href = data.init_point;
+      } else {
+        throw new Error('Link de pagamento não recebido');
+      }
+
+    } catch (error) {
+      console.error('Erro no checkout:', error);
+      alert('Houve um erro ao processar seu pedido. Tente novamente.');
+      
+      submitBtn.textContent = originalText;
+      submitBtn.style.opacity = '1';
+      submitBtn.disabled = false;
+    }
   });
 
   /* ─── CONTADOR ANIMADO (PROVA SOCIAL) ───────────────────── */
